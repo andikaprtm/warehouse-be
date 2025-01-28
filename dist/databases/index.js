@@ -18,13 +18,19 @@ const poolMax = config_1.config.pool.max;
 const poolMin = config_1.config.pool.min;
 const sequelize = new sequelize_1.default.Sequelize(database, username, password, {
     host: host,
-    dialect: dialect || 'mysql',
+    dialect: dialect || "mysql",
     port: Number(port),
     dialectModule: pg_1.default,
-    timezone: '+07:00',
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false,
+        },
+    },
+    timezone: "+07:00",
     define: {
-        charset: 'utf8mb4',
-        collate: 'utf8mb4_general_ci',
+        charset: "utf8mb4",
+        collate: "utf8mb4_general_ci",
         underscored: true,
         freezeTableName: false,
         timestamps: true,
@@ -34,9 +40,9 @@ const sequelize = new sequelize_1.default.Sequelize(database, username, password
         min: poolMin,
         max: poolMax,
     },
-    logQueryParameters: process.env.NODE_ENV === 'development',
+    logQueryParameters: process.env.NODE_ENV === "development",
     logging: (query, time) => {
-        logger_1.logger.info(time + 'ms' + ' ' + query);
+        logger_1.logger.info(time + "ms" + " " + query);
     },
     benchmark: true,
 });
@@ -55,29 +61,29 @@ const DB = {
     Sequelize: sequelize_1.default,
 };
 DB.ProductHistory.belongsTo(DB.Product, {
-    foreignKey: 'product_id',
-    as: 'product'
+    foreignKey: "product_id",
+    as: "product",
 });
 DB.Product.belongsTo(DB.Type, {
-    foreignKey: 'type_id',
-    as: 'type',
+    foreignKey: "type_id",
+    as: "type",
 });
 DB.Product.belongsTo(DB.Unit, {
-    foreignKey: 'unit_id',
-    as: 'unit',
+    foreignKey: "unit_id",
+    as: "unit",
 });
 DB.Product.belongsTo(DB.UnitSize, {
-    foreignKey: 'unit_size_id',
-    as: 'unit_size',
+    foreignKey: "unit_size_id",
+    as: "unit_size",
 });
 DB.TransactionItem.belongsTo(DB.Product, {
-    foreignKey: 'product_code',
-    targetKey: 'code',
-    as: 'product',
+    foreignKey: "product_code",
+    targetKey: "code",
+    as: "product",
 });
 DB.TransactionItem.belongsTo(DB.Transaction, {
-    foreignKey: 'transaction_id',
-    as: 'transaction',
+    foreignKey: "transaction_id",
+    as: "transaction",
 });
 exports.default = DB;
 //# sourceMappingURL=index.js.map

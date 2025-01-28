@@ -1,4 +1,4 @@
-import Sequelize from 'sequelize';
+import Sequelize from "sequelize";
 declare const DB: {
     User: typeof import("../models/user.model").UserModel;
     Product: typeof import("../models/product.model").ProductModel;
